@@ -178,7 +178,97 @@ public class FunkyList<F> implements List<F>, Serializable {
         return null;
     }
 
-    public void delete(int selectedShip) {
+    public FunkyList<Game> searchGamesByPartialName(String partialName) {
+        FunkyList<Game> result = new FunkyList<>();
+
+        for (FunkyNode<F> temp = head; temp != null; temp = temp.next) {
+            if (temp.getContents() instanceof Game) {
+                Game game = (Game) temp.getContents();
+                if (game.getGameName().toLowerCase().contains(partialName.toLowerCase())) {
+                    result.add(game);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // Search for game ports by partial name/title
+    public FunkyList<GamePort> searchGamePortsByPartialName(String partialName) {
+        FunkyList<GamePort> result = new FunkyList<>();
+
+        for (FunkyNode<F> temp = head; temp != null; temp = temp.next) {
+            if (temp.getContents() instanceof GamePort) {
+                GamePort port = (GamePort) temp.getContents();
+                if (port.getOriginalGame().getGameName().toLowerCase().contains(partialName.toLowerCase())) {
+                    result.add(port);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // Search for game machines by partial name/title
+    public FunkyList<GameMachine> searchGameMachinesByPartialName(String partialName) {
+        FunkyList<GameMachine> result = new FunkyList<>();
+
+        for (FunkyNode<F> temp = head; temp != null; temp = temp.next) {
+            if (temp.getContents() instanceof GameMachine) {
+                GameMachine machine = (GameMachine) temp.getContents();
+                if (machine.getMachineName().toLowerCase().contains(partialName.toLowerCase())) {
+                    result.add(machine);
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    // Delete game information and associated ports
+    public void deleteGame(Game gameToDelete) {
+        FunkyNode<F> temp = head;
+        FunkyNode<F> prev = null;
+
+        while (temp != null) {
+            if (temp.getContents() instanceof Game && temp.getContents() == gameToDelete) {
+                // Delete associated ports
+                deletePortsForGame(gameToDelete);
+
+                // Remove the node
+                if (prev == null) {
+                    head = temp.next;
+                } else {
+                    prev.next = temp.next;
+                }
+                break; // Assuming there is only one occurrence of the game in the list
+            }
+            prev = temp;
+            temp = temp.next;
+        }
+    }
+
+    // Helper method to delete ports associated with a game
+    private void deletePortsForGame(Game gameToDelete) {
+        FunkyNode<F> temp = head;
+        FunkyNode<F> prev = null;
+
+        while (temp != null) {
+            if (temp.getContents() instanceof GamePort) {
+                GamePort port = (GamePort) temp.getContents();
+                if (port.getOriginalGame() == gameToDelete) {
+                    // Remove the node (port)
+                    if (prev == null) {
+                        head = temp.next;
+                    } else {
+                        prev.next = temp.next;
+                    }
+                }
+            }
+            prev = temp;
+            temp = temp.next;
+        }
     }
 
     public class FunkyIterator<K> implements Iterator<K> {//allows for each loops in list

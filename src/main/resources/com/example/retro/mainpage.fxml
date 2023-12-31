@@ -17,7 +17,7 @@
             <top>
                 <HBox prefHeight="50.0" prefWidth="608.0" style="-fx-background-color: #1ecbe1;" BorderPane.alignment="CENTER">
                     <children>
-                        <Label fx:id="myLabel" alignment="CENTER" prefHeight="20.0" prefWidth="126.0" text="Baked Good Name" textFill="WHITE">
+                        <Label fx:id="myLabel" alignment="CENTER" prefHeight="20.0" prefWidth="126.0" text="Game Name" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

@@ -21,6 +21,18 @@ public class Game {
         this.coverImageUrl = coverImageUrl;
     }
 
+    // Edit game information
+    public void editGame(String newPublisher, String newDescription, String newOriginalDeveloper,
+                         String newOriginalMachine, int newReleaseYear, String newCoverImageUrl) {
+        // Update the game information
+        this.publisher = newPublisher;
+        this.description = newDescription;
+        this.originalDeveloper = newOriginalDeveloper;
+        this.originalMachine = newOriginalMachine;
+        this.releaseYear = newReleaseYear;
+        this.coverImageUrl = newCoverImageUrl;
+    }
+
     // Getters and setters
     public String getGameName() {
         return gameName;
